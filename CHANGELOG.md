@@ -9,11 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Initial release of `dsh-preset-pi`.
-- Dual presets for DeepSeek Harness:
-  - `preset-pi` (`pi`): Minimalist, pure offline coding agent with no external network tools.
-  - `preset-pi-web` (`pi-web`): Lean coding agent with integrated free web search & web fetch.
+- All-in-one lean coding agent preset (`preset-pi`, ID: `pi`) for DeepSeek Harness.
+- Short, token-efficient system persona reducing prompt overhead by over ~97%.
 - Native multi-file atomic batch editing via `dsh-tool-edit-batch`.
-- Short, token-efficient system persona reducing prompt overhead by over 70%.
+- Free web search and documentation fetch integration via `@deepseek-ai/dsh-tool-web`.
+- Full shell execution tools (`@deepseek-ai/dsh-tool-bash` on POSIX, `@deepseek-ai/dsh-tool-pwsh` on Windows).
 - Integrated context compaction and tool result pruning (`@deepseek-ai/dsh-compaction-basic`, `@deepseek-ai/dsh-compaction-tool-result-pruner`).
 - SVG brand artwork (`icon.svg`).
 - Internationalization support for English (`locale/en.json`) and Indonesian (`locale/id.json`).

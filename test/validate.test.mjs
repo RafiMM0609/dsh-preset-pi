@@ -53,17 +53,18 @@ test('locale files conform to DSH schema', () => {
   }
 });
 
-test('cordis.patch.yml contains both pi and pi-web presets', () => {
+test('cordis.patch.yml contains single all-in-one Pi preset', () => {
   const patchPath = path.join(rootDir, 'cordis.patch.yml');
   assert.ok(fs.existsSync(patchPath), 'cordis.patch.yml must exist');
 
   const content = fs.readFileSync(patchPath, 'utf8');
 
-  // Basic patch structure check
+  // Structure check
   assert.match(content, /- insert:/, 'patch must have - insert:');
   assert.match(content, /id: preset-pi\b/, 'must declare preset-pi');
-  assert.match(content, /id: preset-pi-web\b/, 'must declare preset-pi-web');
   assert.match(content, /name: ['"]?@deepseek-ai\/dsh-agent-preset['"]?/, 'must use dsh-agent-preset');
+  assert.match(content, /id: pi\b/, 'preset config id must be pi');
+  assert.match(content, /name: Pi\b/, 'preset config name must be Pi');
 
   // Persona
   assert.match(content, /id: persona/, 'must include persona plugin');
@@ -74,7 +75,7 @@ test('cordis.patch.yml contains both pi and pi-web presets', () => {
   assert.match(content, /id: tool-pwsh/, 'must include tool-pwsh');
   assert.match(content, /id: tool-fs/, 'must include tool-fs');
   assert.match(content, /id: tool-edit-batch/, 'must include tool-edit-batch');
-  assert.match(content, /id: tool-web/, 'must include tool-web in pi-web');
+  assert.match(content, /id: tool-web/, 'must include tool-web with search & fetch');
 
   // Compaction
   assert.match(content, /id: compaction/, 'must include compaction group');

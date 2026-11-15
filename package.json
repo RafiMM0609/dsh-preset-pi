@@ -1,7 +1,7 @@
 {
   "name": "dsh-preset-pi",
   "version": "1.0.0",
-  "description": "Pi-style lean, token-efficient coding agent presets for DeepSeek Harness with free web search and batch editing",
+  "description": "Pi-style lean, token-efficient coding agent preset for DeepSeek Harness with free web search and batch editing",
   "author": "rafimahrus <mahrusrafi@gmail.com>",
   "license": "MIT",
   "type": "module",
