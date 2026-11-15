@@ -1,34 +1,56 @@
 {
   "name": "dsh-preset-pi",
   "version": "1.0.0",
-  "description": "Pi-style lean coding agent preset for DeepSeek Harness with free web search and batch editing",
+  "description": "Pi-style lean, token-efficient coding agent presets for DeepSeek Harness with free web search and batch editing",
   "author": "rafimahrus <mahrusrafi@gmail.com>",
   "license": "MIT",
   "type": "module",
+  "icon": "./icon.svg",
+  "exports": {
+    "./package.json": "./package.json",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
   "publishConfig": {
     "access": "public"
   },
   "files": [
     "cordis.patch.yml",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE",
     "icon.svg",
     "locale/"
   ],
+  "scripts": {
+    "test": "node --test test/validate.test.mjs"
+  },
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
     }
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafimahrus/dsh-preset-pi.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rafimahrus/dsh-preset-pi/issues"
+  },
+  "homepage": "https://github.com/rafimahrus/dsh-preset-pi#readme",
   "keywords": [
+    "deepseek",
     "deepseek-harness",
     "dsh",
     "dsh-plugin",
     "dsh-bundle",
     "agent-preset",
     "pi",
+    "lean-agent",
+    "batch-edit",
     "web-search",
-    "coding-agent"
+    "cordis"
   ],
   "engines": {
     "node": ">=20",

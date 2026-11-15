@@ -1,4 +1,6 @@
 {
-  "title": "Pi (Web Search) Preset",
-  "description": "Pi-style lean coding agent preset for DeepSeek Harness with free web search and batch editing."
+  "meta": {
+    "title": "Pi Presets",
+    "description": "Minimalist, super-fast autonomous coding presets (offline and web search variants) for DeepSeek Harness with batch editing and high token efficiency."
+  }
 }

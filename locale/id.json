@@ -1,4 +1,6 @@
 {
-  "title": "Preset Pi (Pencarian Web)",
-  "description": "Preset agen coding ramping ala Pi untuk DeepSeek Harness dengan fitur pencarian web gratis dan batch editing."
+  "meta": {
+    "title": "Preset Pi",
+    "description": "Preset agen koding otonom minimalis dan super cepat (varian offline dan pencarian web) untuk DeepSeek Harness dengan pengeditan batch dan efisiensi token tinggi."
+  }
 }
