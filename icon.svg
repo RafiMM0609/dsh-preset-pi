@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff7b00" />
+      <stop offset="100%" stop-color="#e02424" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <!-- Background Rounded Rect -->
+  <rect x="8" y="8" width="112" height="112" rx="24" fill="url(#grad)" filter="url(#shadow)"/>
+  
+  <!-- Greek Pi Symbol -->
+  <path d="M34 42 C40 42, 88 42, 94 42 C98 42, 98 36, 94 36 C86 36, 38 36, 34 36 C28 36, 28 42, 34 42 Z" fill="#ffffff" />
+  <!-- Left Leg -->
+  <path d="M44 40 L44 86 C44 92, 38 92, 36 88" stroke="#ffffff" stroke-width="8" stroke-linecap="round" fill="none" />
+  <!-- Right Leg -->
+  <path d="M84 40 L84 84 C84 94, 94 92, 96 88" stroke="#ffffff" stroke-width="8" stroke-linecap="round" fill="none" />
+  
+  <!-- Search Accent Node -->
+  <circle cx="86" cy="84" r="14" fill="#ffffff" filter="url(#shadow)"/>
+  <circle cx="84" cy="82" r="6" stroke="#ff7b00" stroke-width="3" fill="none"/>
+  <line x1="88" y1="86" x2="94" y2="92" stroke="#ff7b00" stroke-width="3" stroke-linecap="round"/>
+</svg>
