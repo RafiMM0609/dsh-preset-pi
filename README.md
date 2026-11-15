@@ -120,7 +120,7 @@ Verifies:
 
 ## 🚢 Publishing to npm
 
-To publish this bundle to the npm registry:
+See [PUBLISHING.md](./PUBLISHING.md) for the complete step-by-step guide on creating the GitHub repository, pre-publish checks, and publishing to npm.
 
 ```bash
 # 1. Login to your npm account
