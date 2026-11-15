@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "Pi Preset",
-    "description": "Minimalist, super-fast autonomous coding preset for DeepSeek Harness with batch editing, free web search, and high token efficiency."
+    "description": "Minimalist, super-fast autonomous coding preset for DeepSeek Harness with native Pi multi-edit, find/grep, background jobs, skills, delegation, free web search, and high token efficiency."
   }
 }

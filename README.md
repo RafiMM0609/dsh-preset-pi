@@ -1,6 +1,6 @@
 # dsh-preset-pi
 
-> **Pi-style lean, token-efficient coding agent preset for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) with free web search and atomic batch editing.**
+> **Pi-style lean, token-efficient coding agent preset for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) with native batch editing, find/grep, background jobs, skills, delegation, and free web search.**
 
 <p align="center">
   <img src="./icon.svg" width="96" height="96" alt="dsh-preset-pi icon" />
@@ -17,7 +17,7 @@
 
 ## ✨ Overview
 
-`dsh-preset-pi` is an official Cordis agent preset bundle for DeepSeek Harness. It delivers an ultra-fast, token-efficient coding workflow inspired by [pi](https://github.com/earendil-works/pi), bundling lean persona instructions, atomic batch multi-editing, native shell commands, and free real-time web search into a single **"Pi"** preset.
+`dsh-preset-pi` is an official Cordis agent preset bundle for DeepSeek Harness. It delivers an ultra-fast, token-efficient coding workflow inspired by [pi](https://github.com/earendil-works/pi), bundling lean persona instructions, native atomic batch multi-editing, gitignore-aware find & grep, quiet background job management, subagent delegation, and free real-time web search into a single **"Pi"** preset.
 
 ### 📊 Token & Performance Comparison
 
@@ -25,18 +25,26 @@
 |---|---|---|---|
 | **System Prompt Size** | ~14,000 – 18,000 tokens | **~450 tokens** | **~97% reduction** |
 | **Time to First Token (TTFT)** | ~2.5s – 4.2s | **~0.6s – 1.1s** | **~3.5x faster** |
-| **Editing Mechanism** | Line-by-line single edits | **Multi-replacement atomic batch** | Faster multi-file refactoring |
+| **Editing Mechanism** | Line-by-line single edits | **Native Pi atomic multi-edit** | Multi-replacement atomic edits |
+| **Code Search** | Basic glob search | **Gitignore-aware `find` & enriched `grep`** | Matches exact Pi discovery flow |
+| **Background Commands** | Foreground block / Unconfigured | **`tool-jobs` quiet backgrounding** | Non-blocking builds & tests |
 | **Web Research** | Varies / Requires key | **Integrated Free Web Search** | Ready out-of-the-box |
-| **Context Compaction** | Manual / Standard | **Automatic Pruning (>8KB threshold)** | Eliminates context blowout |
+| **Delegation** | Heavy fork delegation | **Clean spawn delegation & workflow** | Inspect large repos without context blowout |
+| **Context Compaction** | Manual / Standard | **Automatic Pruning (>8KB threshold)** | Keeps long chat sessions responsive |
 
 ---
 
 ## 🎯 Features
 
 - ⚡ **Ultra-Lean System Persona (`complete: true`):** Bypasses massive default instructions and boilerplate rules, keeping responses concise and direct.
-- ✏️ **Atomic Batch Multi-Edit (`dsh-tool-edit-batch`):** Enables simultaneous, multi-chunk find-and-replace edits across files without rewriting full files.
+- 📋 **Project Instructions (`AGENTS.md`):** Automatically reads up to 64KB of project rules and guidelines via `@deepseek-ai/dsh-agent-instructions`.
+- ✏️ **Native Pi Multi-Edit (`editStyle: pi`):** Executes simultaneous, non-overlapping find-and-replace replacements in one atomic write via `@deepseek-ai/dsh-tool-fs`.
+- 🔎 **Pi File Discovery (`find` & `grep`):** Dedicated `find` tool respecting `.gitignore` and enriched `grep` tool via `@deepseek-ai/dsh-tool-fs-search`.
+- ⚙️ **Quiet Background Jobs (`tool-jobs`):** Enables `run_in_background` for long build or test commands without unprompted turn spam.
+- 🧩 **Project Skills (`.pi/skills`):** Native scanning of `.pi/skills` and `.agents/skills` directories via `@deepseek-ai/dsh-skill-filesystem`.
+- 👥 **Clean Subagent Delegation:** Spawns isolated clean subagents and workflows to survey large codebases without polluting the lead agent's context.
 - 🔍 **Integrated Free Web Search (`tool-web`):** Searches the live internet and fetches remote documentation on demand with zero API key configuration.
-- 💻 **Native Shell Tools:** Uses bash (`pwsh` on Windows) for search and inspection (`rg`, `find`, `ls`, `grep`).
+- 💻 **Native Shell Tools:** Uses bash (`pwsh` on Windows) for execution.
 - 🧹 **Context & History Pruner:** Automatically truncates bloated tool outputs (>8,192 characters) to keep long chat sessions responsive.
 
 ---
@@ -87,14 +95,19 @@ Add `dsh-preset-pi` to your profile bundle list in `~/.dsh/profiles/<profile>/pa
 
 ## 🛠️ Tool Loadout
 
-| Tool ID | Package | Description |
+| Tool ID | Package | Configuration / Role |
 |---|---|---|
 | `persona` | `@deepseek-ai/dsh-persona` | Ultra-lean Pi system prompt |
-| `tool-bash` / `tool-pwsh` | `@deepseek-ai/dsh-tool-bash` | Terminal shell execution |
-| `tool-fs` | `@deepseek-ai/dsh-tool-fs` | Filesystem read and write |
-| `tool-edit-batch` | `dsh-tool-edit-batch` | Multi-replacement batch editor |
-| `tool-web` | `@deepseek-ai/dsh-tool-web` | Internet search & documentation fetch |
-| `compaction` | `@deepseek-ai/dsh-compaction-basic` | History pruner & compaction |
+| `agent-instructions` | `@deepseek-ai/dsh-agent-instructions` | Loads project `AGENTS.md` (up to 64KB) |
+| `tool-bash` / `tool-pwsh` | `@deepseek-ai/dsh-tool-bash` | Shell execution with backgrounding support |
+| `tool-fs` | `@deepseek-ai/dsh-tool-fs` | Native atomic batch multi-edit (`editStyle: pi`) |
+| `tool-fs-search` | `@deepseek-ai/dsh-tool-fs-search` | Gitignore-aware `find` & enriched `grep` |
+| `tool-web` | `@deepseek-ai/dsh-tool-web` | Free internet search & documentation fetch |
+| `tool-jobs` | `@deepseek-ai/dsh-tool-jobs` | Quiet background job controller (`run_in_background`) |
+| `skill-filesystem` | `@deepseek-ai/dsh-skill-filesystem` | Custom skill discovery including `.pi/skills` |
+| `tool-skill` | `@deepseek-ai/dsh-tool-skill` | Skill invocation tool |
+| `delegation` | `@deepseek-ai/dsh-tool-subagent` | Clean subagent spawn & workflow delegation |
+| `compaction` | `@deepseek-ai/dsh-compaction-basic` | Automatic history pruning & compaction |
 
 ---
 
@@ -108,7 +121,7 @@ npm test
 
 Verifies:
 - `package.json` manifest and exports mappings.
-- Cordis patch structure, preset declarations, and tool bindings.
+- Cordis patch structure, preset declarations, and complete tool bindings.
 - Locale schema compliance (`locale/en.json`, `locale/id.json`).
 - SVG brand artwork dimensions and limits.
 

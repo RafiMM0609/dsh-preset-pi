@@ -1,10 +1,15 @@
 # ============================================================================
 # dsh-preset-pi: Pi Coding Agent Preset for DeepSeek Harness
 # ============================================================================
-# Lean, fast, Pi-inspired coding preset with:
+# Official full Pi-style composition:
 #   - Short concise persona (drastically saves prompt tokens vs bloated defaults)
-#   - Full coding toolset: bash/pwsh, fs (read/write), batch multi-edit
-#   - Free Web Search & Web Fetch (dsh-free-search & tool-web)
+#   - Project instructions: AGENTS.md loaded up to 64KB
+#   - Full coding toolset: bash/pwsh with background jobs (`tool-jobs` quiet mode)
+#   - Native Pi multi-edit: atomic batch replacements via `tool-fs` (editStyle: pi)
+#   - Native Pi file discovery: `find` (respects .gitignore) and enriched `grep`
+#   - Free Web Search & Web Fetch (`tool-web` with searchTimeoutMs: 60000)
+#   - Skills system: includes project `.pi/skills` root
+#   - Clean subagent delegation: spawn-only subagent & workflow (lowers task cost)
 #   - Context history compaction & tool result pruning
 # ============================================================================
 
@@ -14,20 +19,24 @@
       config:
         id: pi
         name: Pi
-        description: Lean pi-style coding agent with integrated web search & batch editing
+        description: Lean pi-style coding agent with Pi multi-edit, find/grep, background jobs, skills, delegation, and free web search
         order: 2
         plugins:
           - id: persona
             name: '@deepseek-ai/dsh-persona'
             config:
               prefix: >-
-                You are a coding assistant running inside pi, a coding agent harness.
-                Help users inspect files, run commands, modify code, and search the web.
-                Use bash for file operations like listing and searching files (ls, rg, find).
+                You are a coding assistant running inside pi, a coding agent
+                harness. Help users inspect files, run commands, modify code,
+                and search the web.
+              suffix: >-
                 Be concise in your responses.
                 Show file paths clearly when working with files.
-              complete: true
-              includeRuntimeContext: true
+
+          - id: agent-instructions
+            name: '@deepseek-ai/dsh-agent-instructions'
+            config:
+              maxBytes: 65536
 
           - id: tool-bash
             name: '@deepseek-ai/dsh-tool-bash'
@@ -40,16 +49,89 @@
           - id: tool-fs
             name: '@deepseek-ai/dsh-tool-fs'
             config:
-              edit: false
+              # Pi has no apply_patch tool; read_image is DSH's equivalent of
+              # Pi's image-aware read. Pi's edit schema carries a list of
+              # replacements in one call, so this preset uses that variant.
+              applyPatch: false
+              readImage: true
+              editStyle: pi
 
-          - id: tool-edit-batch
-            name: 'dsh-tool-edit-batch'
+          # Pi's find/grep tools: `find` is Pi's file discovery (respecting
+          # .gitignore), and `grep` carries Pi's optional glob/ignoreCase/
+          # literal/context/limit arguments. `glob` is DSH's equivalent of a
+          # broader find, so it stays off here to keep the tool list Pi-shaped.
+          - id: tool-fs-search
+            name: '@deepseek-ai/dsh-tool-fs-search'
+            config:
+              sampleOverCapGlobResults: false
+              glob: false
+              find: true
 
           - id: tool-web
             name: '@deepseek-ai/dsh-tool-web'
             config:
               fetch: true
               searchTimeoutMs: 60000
+
+          # A long `npm run typecheck` or build otherwise holds the whole step
+          # open, so the inbox cannot hand the Lead a mid-turn question until it
+          # returns. Loading this plugin attaches the job controller that
+          # `run_in_background` needs; without it that argument is rejected with
+          # JOB_CONTROLLER_UNAVAILABLE. `quiet` keeps a finished job from opening
+          # a turn on its own while the owner is idle, so the notice waits for the
+          # next real message instead of spending request tokens unasked.
+          - id: tool-jobs
+            name: '@deepseek-ai/dsh-tool-jobs'
+            config:
+              completionDelivery: quiet
+
+          - id: skill-filesystem
+            name: '@deepseek-ai/dsh-skill-filesystem'
+            config:
+              # DSH already scans <project>/.agents/skills and
+              # ~/.agents/skills, which Pi also reads. This adds Pi's project
+              # .pi/skills root relative to the directory that launched DSH.
+              customSkillDirs:
+                - !!js process.getBuiltinModule('node:path').resolve('.pi/skills')
+
+          - id: tool-skill
+            name: '@deepseek-ai/dsh-tool-skill'
+
+          # Delegation stays out of Pi's own tool list, but without it a large
+          # repository can only be inspected inside this one context window.
+          # `subagent` widens the search without spending the Lead's context, and
+          # `workflow` fans out over many independent pieces at once.
+          # `tool-subagent-control` supplies list_agents/send_message/wait_agent so
+          # those children stay observable; model selection lets a child run on a
+          # cheaper model than the Lead.
+          #
+          # Fork is deliberately absent: it seeds the child with the parent's
+          # completed-turn prefix, which duplicates history into a second context
+          # instead of keeping work out of this one. Spawn starts the child clean,
+          # so it is the delegation that lowers cost per task.
+          - id: delegation
+            name: cordis:group
+            group: true
+            isolate:
+              workflowEngine: true
+            config:
+              - id: tool-subagent-control
+                name: '@deepseek-ai/dsh-tool-subagent-control'
+                config:
+                  interrupt: false
+              - id: tool-subagent
+                name: '@deepseek-ai/dsh-tool-subagent'
+                config:
+                  provider: spawn
+                  toolName: subagent
+                  modelSelection: true
+                  modelDiscovery: true
+              - id: workflow-ptc
+                name: '@deepseek-ai/dsh-workflow-ptc'
+                config:
+                  provider: spawn
+              - id: tool-workflow
+                name: '@deepseek-ai/dsh-tool-workflow'
 
           - id: compaction
             name: cordis:group

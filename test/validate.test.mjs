@@ -53,7 +53,7 @@ test('locale files conform to DSH schema', () => {
   }
 });
 
-test('cordis.patch.yml contains single all-in-one Pi preset', () => {
+test('cordis.patch.yml contains full Pi preset loadout', () => {
   const patchPath = path.join(rootDir, 'cordis.patch.yml');
   assert.ok(fs.existsSync(patchPath), 'cordis.patch.yml must exist');
 
@@ -66,16 +66,31 @@ test('cordis.patch.yml contains single all-in-one Pi preset', () => {
   assert.match(content, /id: pi\b/, 'preset config id must be pi');
   assert.match(content, /name: Pi\b/, 'preset config name must be Pi');
 
-  // Persona
+  // Persona & Instructions
   assert.match(content, /id: persona/, 'must include persona plugin');
   assert.match(content, /You are a coding assistant running inside pi/, 'must have pi persona prompt');
+  assert.match(content, /id: agent-instructions/, 'must include agent-instructions for AGENTS.md');
 
   // Toolset
   assert.match(content, /id: tool-bash/, 'must include tool-bash');
   assert.match(content, /id: tool-pwsh/, 'must include tool-pwsh');
   assert.match(content, /id: tool-fs/, 'must include tool-fs');
-  assert.match(content, /id: tool-edit-batch/, 'must include tool-edit-batch');
+  assert.match(content, /editStyle: pi/, 'tool-fs must use native Pi editStyle');
+  assert.match(content, /id: tool-fs-search/, 'must include tool-fs-search for find and grep');
+  assert.match(content, /find: true/, 'tool-fs-search must enable find');
   assert.match(content, /id: tool-web/, 'must include tool-web with search & fetch');
+  assert.match(content, /id: tool-jobs/, 'must include tool-jobs for background execution');
+  assert.match(content, /completionDelivery: quiet/, 'tool-jobs must use quiet completion');
+
+  // Skills
+  assert.match(content, /id: skill-filesystem/, 'must include skill-filesystem');
+  assert.match(content, /\.pi\/skills/, 'skill-filesystem must scan .pi/skills');
+  assert.match(content, /id: tool-skill/, 'must include tool-skill');
+
+  // Delegation
+  assert.match(content, /id: delegation/, 'must include delegation group');
+  assert.match(content, /id: tool-subagent/, 'must include tool-subagent');
+  assert.match(content, /id: tool-workflow/, 'must include tool-workflow');
 
   // Compaction
   assert.match(content, /id: compaction/, 'must include compaction group');

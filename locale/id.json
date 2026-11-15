@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "Preset Pi",
-    "description": "Preset agen koding otonom minimalis dan super cepat untuk DeepSeek Harness dengan pengeditan batch, pencarian web gratis, dan efisiensi token tinggi."
+    "description": "Preset agen koding otonom minimalis dan super cepat untuk DeepSeek Harness dengan multi-edit Pi native, find/grep, background jobs, skills, delegasi subagent, pencarian web gratis, dan efisiensi token tinggi."
   }
 }
