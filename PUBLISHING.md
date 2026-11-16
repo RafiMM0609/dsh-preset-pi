@@ -19,11 +19,8 @@ Jalankan perintah berikut di terminal:
 ```bash
 cd /home/ubuntu/src/dsh-preset-pi
 
-# Jika menggunakan SSH:
-git remote add origin git@github.com:rafimahrus/dsh-preset-pi.git
-
-# ATAU jika menggunakan HTTPS:
-# git remote add origin https://github.com/rafimahrus/dsh-preset-pi.git
+# Menggunakan HTTPS (kredensial sudah tersimpan di VPS):
+git remote add origin https://github.com/RafiMM0609/dsh-preset-pi.git
 
 # Push branch main beserta semua commit
 git push -u origin main

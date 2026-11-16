@@ -33,12 +33,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rafimahrus/dsh-preset-pi.git"
+    "url": "git+https://github.com/RafiMM0609/dsh-preset-pi.git"
   },
   "bugs": {
-    "url": "https://github.com/rafimahrus/dsh-preset-pi/issues"
+    "url": "https://github.com/RafiMM0609/dsh-preset-pi/issues"
   },
-  "homepage": "https://github.com/rafimahrus/dsh-preset-pi#readme",
+  "homepage": "https://github.com/RafiMM0609/dsh-preset-pi#readme",
   "keywords": [
     "deepseek",
     "deepseek-harness",

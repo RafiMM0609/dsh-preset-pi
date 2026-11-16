@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/dsh-preset-pi"><img src="https://img.shields.io/npm/v/dsh-preset-pi.svg?style=flat-square&color=blue" alt="npm version" /></a>
-  <a href="https://github.com/rafimahrus/dsh-preset-pi/actions"><img src="https://img.shields.io/github/actions/workflow/status/rafimahrus/dsh-preset-pi/ci.yml?branch=main&style=flat-square" alt="build status" /></a>
+  <a href="https://github.com/RafiMM0609/dsh-preset-pi/actions"><img src="https://img.shields.io/github/actions/workflow/status/RafiMM0609/dsh-preset-pi/ci.yml?branch=main&style=flat-square" alt="build status" /></a>
   <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="license" /></a>
   <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg?style=flat-square" alt="node version" /></a>
 </p>
@@ -146,4 +146,4 @@ npm publish --access public
 
 ## 📄 License
 
-[MIT](./LICENSE) © [rafimahrus](https://github.com/rafimahrus)
+[MIT](./LICENSE) © [RafiMM0609](https://github.com/RafiMM0609)
