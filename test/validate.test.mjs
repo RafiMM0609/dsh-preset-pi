@@ -60,7 +60,8 @@ test('cordis.patch.yml contains full Pi preset loadout', () => {
   const content = fs.readFileSync(patchPath, 'utf8');
 
   // Structure check
-  assert.match(content, /- insert:/, 'patch must have - insert:');
+  assert.doesNotMatch(content, /^- insert:/m, 'must override the shipped preset instead of registering a duplicate');
+  assert.match(content, /^- id: preset-pi\s*$/m, 'must target the shipped Pi entry');
   assert.match(content, /id: preset-pi\b/, 'must declare preset-pi');
   assert.match(content, /name: ['"]?@deepseek-ai\/dsh-agent-preset['"]?/, 'must use dsh-agent-preset');
   assert.match(content, /id: pi\b/, 'preset config id must be pi');

@@ -49,6 +49,10 @@
 
 ---
 
+## Local rc.4 integration
+
+This checkout overrides the existing `preset-pi` entry in DSH rc.4. Keep `@deepseek-ai/dsh-web-app` before `dsh-preset-pi` in the profile bundle list. The custom configuration retains preset ID `pi` for existing sessions and registers no second Pi preset. Earlier DSH versions without a shipped Pi entry are not supported by this local adaptation.
+
 ## 📦 Installation
 
 ### Option 1: Via DeepSeek Harness Web UI
